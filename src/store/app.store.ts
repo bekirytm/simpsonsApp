@@ -18,7 +18,8 @@ class AppStore {
   async initialRun() {
     const a = await this.getAllStorageData();
 
-    if (!a) {
+    if (a) {
+      console.log('A');
       await AppApi.fetchAllData()
         .then(async res => {
           runInAction(() => {
@@ -42,14 +43,14 @@ class AppStore {
       const myList = await AsyncStorage.getItem('myAllData');
       if (myList !== null) {
         this.listData = JSON.parse(myList);
-        return true;
+        return false;
       } else {
         console.log('*');
-        return false;
+        return true;
       }
     } catch (error) {
       console.log('1');
-      return false;
+      return true;
     }
   }
 
@@ -63,30 +64,27 @@ class AppStore {
     }
   }
 
-  async pictToDelete(index) {
-    // this.listData[1]
+  //Add Character
+  async addCharacter(values) {
+    const old = this.listData;
+    const newData = [values, ...old];
+
+    // const newData = [...last, values];
+    runInAction(() => {
+      this.listData = newData;
+      this.setAllStorageData(newData);
+    });
   }
 
-  //Notify
-  // async setNotifyData(count) {
-  //   const [err, response] = await AsyncStorage.setItem(
-  //     'notify',
-  //     count,
-  //   ).toArray();
-  //   runInAction(() => {
-  //     this.notifyCount = count;
-  //   });
-  // }
-  //
-  // async getNotifyData() {
-  //   const [err, response] = await AsyncStorage.getItem('notify').toArray();
-  //   if (!err) {
-  //     runInAction(() => {
-  //       this.notifyCount = response;
-  //     });
-  //   }
-  //   return !err;
-  // }
+  //Delete Character
+  async deleteCharacter(index) {
+    const old = [...this.listData];
+    old.splice(index, 1);
+    runInAction(() => {
+      this.listData = old;
+      this.setAllStorageData(old);
+    });
+  }
 }
 
 export default new AppStore();

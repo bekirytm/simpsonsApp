@@ -12,6 +12,12 @@ import {
 import {observer} from 'mobx-react-lite';
 import AppStore from '../../store/app.store';
 import axios from 'axios';
+import {
+  ArrowCircleDown,
+  ArrowCircleUp,
+  Plus,
+  Trash,
+} from '../../components/icons';
 
 type Props = {
   navigation: any;
@@ -66,15 +72,19 @@ const ListScreen = (props: Props) => {
 
         <View style={styles.buttonArea}>
           <TouchableOpacity style={styles.buttonStyle}>
-            <Text>Up</Text>
+            <ArrowCircleUp width={20} height={20} />
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.buttonStyle}>
-            <Text>Dw</Text>
+            <ArrowCircleDown width={20} height={20} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.buttonStyle}>
-            <Text>DL</Text>
+          <TouchableOpacity
+            onPress={() => {
+              AppStore.deleteCharacter(index);
+            }}
+            style={styles.buttonStyle}>
+            <Trash width={20} height={20} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -101,11 +111,11 @@ const ListScreen = (props: Props) => {
 
       <View style={styles.absoluteArea}>
         <TouchableOpacity
-          onPress={() => props.navigation.navigate('Add')}
+          onPress={() =>
+            props.navigation.navigate('Add', {navigation: props.navigation})
+          }
           style={styles.absoluteButton}>
-          <Text style={{color: '#fff', fontWeight: 'bold', fontSize: 30}}>
-            +
-          </Text>
+          <Plus width={25} height={25} />
         </TouchableOpacity>
       </View>
     </View>
