@@ -17,15 +17,18 @@ const HomeNavigation = () => {
       />
 
       <HomeStack.Screen
-        name="Detail"
+        name="Details"
         component={DetailScreen}
-        options={{headerShown: false}}
+        options={{headerShown: true}}
       />
 
       <HomeStack.Screen
         name="Add"
         component={AddScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: true,
+          headerTitle: 'Add New Character',
+        }}
       />
     </HomeStack.Navigator>
   );
