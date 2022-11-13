@@ -85,6 +85,27 @@ class AppStore {
       this.setAllStorageData(old);
     });
   }
+
+  //Reorder
+  async reorderCharacter(type: string, index: number) {
+    if (type === 'up') {
+      const old = this.listData;
+      const a = old.splice(index, 1);
+      old.splice(index - 1, 0, a[0]);
+      this.listData = old;
+      this.setAllStorageData(old);
+      console.log('Up');
+    } else {
+      const old = this.listData;
+      const a = old.splice(index, 1);
+      await old.splice(index + 1, 0, a[0]);
+      runInAction(() => {
+        this.listData = old;
+        this.setAllStorageData(old);
+      });
+      console.log('Down');
+    }
+  }
 }
 
 export default new AppStore();

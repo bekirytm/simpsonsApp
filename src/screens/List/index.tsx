@@ -71,13 +71,25 @@ const ListScreen = (props: Props) => {
         </View>
 
         <View style={styles.buttonArea}>
-          <TouchableOpacity style={styles.buttonStyle}>
-            <ArrowCircleUp width={20} height={20} />
-          </TouchableOpacity>
+          {index !== 0 ? (
+            <TouchableOpacity
+              onPress={() => AppStore.reorderCharacter('up', index)}
+              style={styles.buttonStyle}>
+              <ArrowCircleUp width={20} height={20} />
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.buttonStyle} />
+          )}
 
-          <TouchableOpacity style={styles.buttonStyle}>
-            <ArrowCircleDown width={20} height={20} />
-          </TouchableOpacity>
+          {index !== AppStore.listData.length - 1 ? (
+            <TouchableOpacity
+              onPress={() => AppStore.reorderCharacter('down', index)}
+              style={styles.buttonStyle}>
+              <ArrowCircleDown width={20} height={20} />
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.buttonStyle} />
+          )}
 
           <TouchableOpacity
             onPress={() => {
