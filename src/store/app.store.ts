@@ -3,7 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppApi from '../api/app.api';
 
 class AppStore {
-  fetchingData = null;
   listData = null;
 
   constructor() {
@@ -16,20 +15,19 @@ class AppStore {
   }
 
   async initialRun() {
-    const a = await this.getAllStorageData();
+    const storageData = await this.getAllStorageData();
 
-    if (a) {
+    if (storageData) {
       console.log('A');
       await AppApi.fetchAllData()
         .then(async res => {
           runInAction(() => {
-            this.fetchingData = res;
+            this.listData = res;
           });
           await this.setAllStorageData(res);
           return true;
         })
         .catch(err => {
-          console.log(err, 'ERROR');
           return false;
         });
     } else {
@@ -45,21 +43,17 @@ class AppStore {
         this.listData = JSON.parse(myList);
         return false;
       } else {
-        console.log('*');
         return true;
       }
     } catch (error) {
-      console.log('1');
       return true;
     }
   }
 
   async setAllStorageData(data) {
     try {
-      console.log('U');
       await AsyncStorage.setItem('myAllData', JSON.stringify(data));
     } catch (err) {
-      console.log('N');
       return false;
     }
   }
@@ -89,21 +83,21 @@ class AppStore {
   //Reorder
   async reorderCharacter(type: string, index: number) {
     if (type === 'up') {
-      const old = this.listData;
+      const old = [...this.listData];
       const a = old.splice(index, 1);
       old.splice(index - 1, 0, a[0]);
-      this.listData = old;
-      this.setAllStorageData(old);
-      console.log('Up');
-    } else {
-      const old = this.listData;
-      const a = old.splice(index, 1);
-      await old.splice(index + 1, 0, a[0]);
       runInAction(() => {
         this.listData = old;
         this.setAllStorageData(old);
       });
-      console.log('Down');
+    } else {
+      const old = [...this.listData];
+      const a = old.splice(index, 1);
+      old.splice(index + 1, 0, a[0]);
+      runInAction(() => {
+        this.listData = old;
+        this.setAllStorageData(old);
+      });
     }
   }
 }
