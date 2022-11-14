@@ -63,7 +63,6 @@ class AppStore {
     const old = this.listData;
     const newData = [values, ...old];
 
-    // const newData = [...last, values];
     runInAction(() => {
       this.listData = newData;
       this.setAllStorageData(newData);
@@ -82,17 +81,16 @@ class AppStore {
 
   //Reorder
   async reorderCharacter(type: string, index: number) {
+    const old = [...this.listData];
+    const a = old.splice(index, 1);
+
     if (type === 'up') {
-      const old = [...this.listData];
-      const a = old.splice(index, 1);
       old.splice(index - 1, 0, a[0]);
       runInAction(() => {
         this.listData = old;
         this.setAllStorageData(old);
       });
     } else {
-      const old = [...this.listData];
-      const a = old.splice(index, 1);
       old.splice(index + 1, 0, a[0]);
       runInAction(() => {
         this.listData = old;
