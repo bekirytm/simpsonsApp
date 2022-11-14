@@ -11,7 +11,7 @@ function SvgTrash(props) {
       <Path fill="none" d="M0 0h256v256H0z" />
       <Path
         fill="none"
-        stroke="#000"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={16}

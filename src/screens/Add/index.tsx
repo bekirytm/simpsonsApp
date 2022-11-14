@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   ScrollView,
   View,
 } from 'react-native';
-import {observer} from 'mobx-react-lite';
 import {Formik} from 'formik';
 import AppStore from '../../store/app.store';
 
@@ -20,12 +18,7 @@ type Props = {
 };
 
 const AddScreen = (props: Props) => {
-  const [loading, setLoading] = useState(true);
-
-  const _handleSubmit = async (
-    values,
-    {setSubmitting, setErrors, setStatus, resetForm},
-  ) => {
+  const _handleSubmit = async (values: any) => {
     const addObj = {
       avatar: values.image,
       description: values.about,
@@ -34,25 +27,37 @@ const AddScreen = (props: Props) => {
     };
     await AppStore.addCharacter(addObj);
     props.route.params.navigation.navigate('List');
-    console.log(values, 'ADDDDD');
   };
 
-  const formInputCard = (title: string, value: string, changeText: void) => {
+  const formInputCard = (title: string, value: string, changeText: any) => {
     return (
       <View style={{marginBottom: 15}}>
-        <Text>{title}</Text>
+        <View style={{marginBottom: 5}}>
+          <Text style={{fontWeight: '400', color: 'red'}}>{title}</Text>
+        </View>
 
         <TextInput
           value={value}
-          onChangeText={text => changeText(text)}
-          style={{width: '100%', height: 100, borderWidth: 1, borderRadius: 5}}
+          onChangeText={text => {
+            changeText(text);
+          }}
+          multiline={true}
+          style={{
+            textAlign: 'justify',
+            textAlignVertical: 'top',
+            width: '100%',
+            height: 60,
+            borderWidth: 1,
+            borderColor: 'rgba(0,0,0,0.3)',
+            borderRadius: 5,
+          }}
         />
       </View>
     );
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{paddingTop: 20}}>
       <Formik
         initialValues={{
           name: '',
@@ -65,8 +70,6 @@ const AddScreen = (props: Props) => {
       >
         {({values, handleChange, handleSubmit}) => {
           const disabled =
-            // isSubmitting ||
-            // Object.keys(errors).length !== 0 ||
             values.name.trim() === '' ||
             values.job.trim() === '' ||
             values.about.trim() === '' ||
@@ -112,20 +115,9 @@ const AddScreen = (props: Props) => {
           );
         }}
       </Formik>
+      <View style={{height: 100}} />
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {},
-  winLoseArea: {
-    position: 'absolute',
-    right: 30,
-    top: 5,
-    width: 50,
-    height: 50,
-    borderRadius: 10,
-  },
-});
-
-export default observer(AddScreen);
+export default AddScreen;

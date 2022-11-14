@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Image,
   ScrollView,
@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {observer} from 'mobx-react-lite';
-const {width, height} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 type Props = {
   route: {
@@ -19,10 +19,6 @@ type Props = {
 };
 
 const DetailScreen = (props: Props) => {
-  const [loading, setLoading] = useState(true);
-
-  console.log('DETAILLLL', props.route.params.detailInfo);
-
   return (
     <View style={{flex: 1}}>
       <ScrollView style={{flex: 1, backgroundColor: '#f2f2f2'}}>

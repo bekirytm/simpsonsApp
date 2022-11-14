@@ -14,13 +14,13 @@ function SvgArrowCircleUp(props) {
         cy={128}
         r={96}
         fill="none"
-        stroke="#000"
+        stroke="currentColor"
         strokeMiterlimit={10}
         strokeWidth={16}
       />
       <Path
         fill="none"
-        stroke="#000"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth={16}

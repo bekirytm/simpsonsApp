@@ -1,5 +1,5 @@
 import {action, makeAutoObservable, observable, runInAction} from 'mobx';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AsyncStorage} from 'react-native';
 import AppApi from '../api/app.api';
 
 class AppStore {

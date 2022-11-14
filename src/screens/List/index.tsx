@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
-  Button,
   FlatList,
   Image,
   StyleSheet,
@@ -11,7 +10,6 @@ import {
 } from 'react-native';
 import {observer} from 'mobx-react-lite';
 import AppStore from '../../store/app.store';
-import axios from 'axios';
 import {
   ArrowCircleDown,
   ArrowCircleUp,
@@ -75,7 +73,7 @@ const ListScreen = (props: Props) => {
             <TouchableOpacity
               onPress={() => AppStore.reorderCharacter('up', index)}
               style={styles.buttonStyle}>
-              <ArrowCircleUp width={20} height={20} />
+              <ArrowCircleUp width={20} height={20} color={'green'} />
             </TouchableOpacity>
           ) : (
             <View style={styles.buttonStyle} />
@@ -85,7 +83,7 @@ const ListScreen = (props: Props) => {
             <TouchableOpacity
               onPress={() => AppStore.reorderCharacter('down', index)}
               style={styles.buttonStyle}>
-              <ArrowCircleDown width={20} height={20} />
+              <ArrowCircleDown width={20} height={20} color={'red'} />
             </TouchableOpacity>
           ) : (
             <View style={styles.buttonStyle} />
@@ -96,7 +94,7 @@ const ListScreen = (props: Props) => {
               AppStore.deleteCharacter(index);
             }}
             style={styles.buttonStyle}>
-            <Trash width={20} height={20} />
+            <Trash width={20} height={20} color={'blue'} />
           </TouchableOpacity>
         </View>
       </TouchableOpacity>
@@ -127,7 +125,7 @@ const ListScreen = (props: Props) => {
             props.navigation.navigate('Add', {navigation: props.navigation})
           }
           style={styles.absoluteButton}>
-          <Plus width={25} height={25} />
+          <Plus width={25} height={25} color={'#fff'} />
         </TouchableOpacity>
       </View>
     </View>
